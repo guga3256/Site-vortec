@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "bounce-easing",
+        "value": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+        "createdAt": "2026-09-15T16:06:12.852Z",
+        "reason": "Claude: literal map-pin-drop physics (squash-and-stretch settle), matches DESIGN.md's motion-has-literal-referent rule, not generic UI bounce"
+      }
+    ]
+  }
+}

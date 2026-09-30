@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-15T15:45:00Z",
+  "title": "Design System: Vortec",
+  "extensions": {
+    "colorMeta": {
+      "signal-blue": {
+        "role": "primary",
+        "displayName": "Signal Blue",
+        "canonical": "oklch(45% 0.28 264)",
+        "tonalRamp": [
+          "oklch(15% 0.10 264)",
+          "oklch(25% 0.16 264)",
+          "oklch(35% 0.22 264)",
+          "oklch(45% 0.28 264)",
+          "oklch(58% 0.24 264)",
+          "oklch(70% 0.18 264)",
+          "oklch(82% 0.11 264)",
+          "oklch(93% 0.04 264)"
+        ]
+      },
+      "midnight-navy": {
+        "role": "neutral",
+        "displayName": "Midnight Navy",
+        "canonical": "oklch(8% 0.02 260)",
+        "tonalRamp": [
+          "oklch(4% 0.01 260)",
+          "oklch(8% 0.02 260)",
+          "oklch(14% 0.02 260)",
+          "oklch(22% 0.02 260)",
+          "oklch(35% 0.02 260)",
+          "oklch(55% 0.02 260)",
+          "oklch(75% 0.01 260)",
+          "oklch(92% 0.01 260)"
+        ]
+      },
+      "slate-card": {
+        "role": "neutral",
+        "displayName": "Slate Card",
+        "canonical": "oklch(14% 0.02 260)"
+      },
+      "muted-steel": {
+        "role": "neutral",
+        "displayName": "Muted Steel",
+        "canonical": "oklch(68% 0.02 260)"
+      },
+      "alert-coral": {
+        "role": "error",
+        "displayName": "Alert Coral",
+        "canonical": "oklch(65% 0.22 15)",
+        "tonalRamp": [
+          "oklch(18% 0.08 15)",
+          "oklch(28% 0.12 15)",
+          "oklch(40% 0.16 15)",
+          "oklch(52% 0.20 15)",
+          "oklch(65% 0.22 15)",
+          "oklch(76% 0.16 15)",
+          "oklch(86% 0.09 15)",
+          "oklch(95% 0.03 15)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero and section headlines only (h1/h2). Never used for body copy or button labels." },
+      "body": { "displayName": "Body", "purpose": "All paragraph copy, nav links, card text." }
+    },
+    "shadows": [
+      { "name": "cta-glow", "value": "0 10px 15px -3px oklch(45% 0.28 264 / 0.25)", "purpose": "The only real shadow in the system: tinted brand-blue glow on the primary WhatsApp button." }
+    ],
+    "motion": [
+      { "name": "marquee", "value": "32s linear infinite", "purpose": "Header ticker bar, continuous horizontal scroll of trust signals." },
+      { "name": "float", "value": "9s ease-in-out infinite", "purpose": "Ambient glow orbs drifting behind hero/CTA content." },
+      { "name": "rise", "value": "0.8s cubic-bezier(0.16, 1, 0.3, 1) both", "purpose": "Entrance for hero copy and scroll-reveal sections." },
+      { "name": "radar-ping", "value": "2.8s cubic-bezier(0, 0, 0.2, 1) infinite", "purpose": "Expanding ring pulse on the hero phone's map pin." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Filled pill CTA with brand-blue glow shadow; every conversion action on the site uses this.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\"><svg class=\"ds-btn-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z\"/></svg>Fazer um Diagnóstico Gratuito</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 9999px; padding: 16px 28px; background: hsl(231, 100%, 50%); color: #fff; font-weight: 500; font-size: 14px; box-shadow: 0 10px 15px -3px hsla(231, 100%, 50%, 0.25); transition: background 0.2s, box-shadow 0.2s; text-decoration: none; } .ds-btn-primary:hover { background: hsla(231, 100%, 50%, 0.9); box-shadow: 0 10px 15px -3px hsla(231, 100%, 50%, 0.4); } .ds-btn-icon { width: 20px; height: 20px; transition: transform 0.2s; } .ds-btn-primary:hover .ds-btn-icon { transform: scale(1.1); }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary pill action for use next to a primary CTA, lower visual weight.",
+      "html": "<a class=\"ds-btn-outline\" href=\"#\">Ver como funciona</a>",
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; justify-content: center; border-radius: 9999px; padding: 16px 28px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); color: #fff; font-weight: 500; font-size: 14px; transition: border-color 0.2s, background 0.2s; text-decoration: none; } .ds-btn-outline:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); }"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Base content container: flat slate surface, hairline border, no shadow, brightens border on hover.",
+      "html": "<div class=\"ds-card\"><h3 class=\"ds-card-title\">Domínio do Google Maps</h3><p class=\"ds-card-text\">Reivindicamos, estruturamos e otimizamos o Perfil da sua Empresa para você aparecer nas três primeiras posições.</p></div>",
+      "css": ".ds-card { border-radius: 7.2px; background: hsl(220, 31%, 10%); border: 1px solid rgba(255,255,255,0.1); padding: 28px; transition: border-color 0.3s, transform 0.3s; } .ds-card:hover { border-color: hsla(231, 100%, 50%, 0.4); transform: translateY(-4px); } .ds-card-title { font-family: 'Clash Display', Inter, sans-serif; font-size: 20px; font-weight: 600; color: #fff; margin: 0 0 12px; } .ds-card-text { font-size: 14px; line-height: 1.6; color: hsl(216, 19%, 66%); margin: 0; }"
+    },
+    {
+      "name": "Eyebrow Badge",
+      "kind": "chip",
+      "refersTo": "badge",
+      "description": "Small pill label used above headlines and as trust-signal chips.",
+      "html": "<span class=\"ds-badge\"><svg class=\"ds-badge-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z\"/><circle cx=\"12\" cy=\"10\" r=\"3\"/></svg>SEO Local &amp; Sites de Alta Conversão</span>",
+      "css": ".ds-badge { display: inline-flex; align-items: center; gap: 8px; border-radius: 9999px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); padding: 4px 12px; font-size: 12px; font-weight: 500; color: hsl(216, 19%, 66%); } .ds-badge-icon { width: 14px; height: 14px; color: hsl(231, 100%, 50%); }"
+    },
+    {
+      "name": "Nav Bar",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "Fixed header: solid-blue animated ticker above a translucent, blur-on-scroll nav row.",
+      "html": "<div class=\"ds-nav-ticker\">Top 3 no Google Maps da sua região /&nbsp; Mais avaliações. Mais confiança. /</div><div class=\"ds-nav\"><span class=\"ds-nav-logo\">vortec</span><nav class=\"ds-nav-links\"><a href=\"#\">O Problema</a><a href=\"#\">O Método</a></nav><a class=\"ds-btn-primary\" href=\"#\" style=\"padding:8px 20px;font-size:13px;\">Diagnóstico Gratuito</a></div>",
+      "css": ".ds-nav-ticker { background: hsl(231, 100%, 50%); color: #fff; font-size: 12px; font-weight: 500; padding: 8px 24px; white-space: nowrap; overflow: hidden; } .ds-nav { display: flex; align-items: center; justify-content: space-between; height: 64px; padding: 0 24px; background: hsla(218, 33%, 5%, 0.7); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-bottom: 1px solid rgba(255,255,255,0.1); } .ds-nav-logo { font-family: 'Clash Display', Inter, sans-serif; font-weight: 600; color: #fff; text-transform: lowercase; } .ds-nav-links { display: flex; gap: 32px; } .ds-nav-links a { color: hsl(216, 19%, 66%); font-size: 14px; text-decoration: none; transition: color 0.2s; } .ds-nav-links a:hover { color: #fff; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Digital Storefront",
+    "overview": "Vortec's interface is a shopfront lit up after dark: everything else on the block (the competitor's Google listing, the generic marketing-agency site) sits in shadow, and this one glows. The base surface is a near-black navy so deep it reads as night, and every meaningful element — the CTA button, the map pin, the \"Local Pack\" glow — earns its light back from that darkness rather than starting bright. Voice is confident and urgent, never soft-sell: headlines name the loss happening right now (\"your competitor got the customer today\"), and the visual language backs that up with live signals — a marquee ticker, a pulsing radar ring, a pin dropping onto a map — instead of static, decorative shapes.\n\nThis is deliberately not a generic \"AI SaaS\" landing page. There is no purple-to-pink gradient, no abstract blob illustration, no glassy corporate hero doing nothing. The blue is a single, decisive signal color, used sparingly against near-black so it always reads as \"this is the thing that matters,\" and every animated element (marquee, glow float, radar ping, pin drop) has a literal referent in the product story (Google Maps ranking, visibility, trust signals) rather than existing for ambient decoration.",
+    "keyCharacteristics": [
+      "Near-black navy base with one decisive signal-blue accent, never diluted into a multi-color palette.",
+      "Depth from tonal layering and soft ambient glow, not hard drop shadows.",
+      "Buttons are always full pills; cards are always soft-cornered rectangles — a firm shape grammar, not an accident of defaults.",
+      "Motion is literal (radar pulse, pin drop, marquee, shimmer) and tied to the local-search metaphor, not generic entrance easing for its own sake.",
+      "Display type (Clash Display) is reserved for headlines only; body copy stays in Inter for legibility."
+    ],
+    "rules": [
+      { "name": "The One Signal Rule", "body": "Signal Blue is the only saturated hue in the system. Alert Coral exists solely to mark a problem; it never appears as a second \"brand\" accent alongside blue.", "section": "colors" },
+      { "name": "The Display-Is-Rare Rule", "body": "font-display is applied only to h1/h2 headline text. Every other element, including large numerals and button labels, stays in Inter.", "section": "typography" },
+      { "name": "The Glow-Not-Shadow Rule", "body": "When a section needs to feel lit, reach for a blurred, low-opacity Signal Blue orb behind the content, never a neutral box-shadow. The only exception is the primary CTA button, whose shadow is tinted with the brand blue, never neutral gray.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep Signal Blue as the only saturated accent color; every other hue (Alert Coral included) is a narrow, role-specific exception.",
+      "Do build depth with tonal steps and blurred glow, never a neutral box-shadow.",
+      "Do tie motion to the product's literal metaphors (radar, pin-drop, marquee, shimmer).",
+      "Do use rounded-full for every clickable action and the theme's 2xl radius for every content container."
+    ],
+    "donts": [
+      "Don't introduce a purple/pink gradient or generic \"AI SaaS\" visual language.",
+      "Don't invent testimonials, client logos, review counts, or case-study numbers on this site.",
+      "Don't treat the .dark class block in app/globals.css as live theme source — it is inert legacy scaffolding.",
+      "Don't add a second saturated accent color \"for variety.\""
+    ]
+  }
+}

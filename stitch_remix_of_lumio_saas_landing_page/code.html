@@ -1,0 +1,519 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>GMN Pro - Otimização de Perfil no Google</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "inverse-on-surface": "#2d3135",
+                "on-error-container": "#ffdad6",
+                "tertiary-fixed": "#e2e2e2",
+                "inverse-primary": "#343dff",
+                "secondary-fixed": "#dce3f0",
+                "on-secondary-fixed-variant": "#404752",
+                "surface-container": "#1c2024",
+                "tertiary-fixed-dim": "#c6c6c7",
+                "surface-tint": "#bec2ff",
+                "on-background": "#e0e3e8",
+                "on-primary-fixed": "#00006e",
+                "inverse-surface": "#e0e3e8",
+                "secondary": "#c0c7d4",
+                "on-primary": "#0001ac",
+                "primary-fixed-dim": "#bec2ff",
+                "tertiary-container": "#4a4c4c",
+                "on-primary-container": "#b3b7ff",
+                "surface": "#101418",
+                "surface-container-high": "#262a2f",
+                "error-container": "#93000a",
+                "on-secondary-fixed": "#151c25",
+                "on-error": "#690005",
+                "on-primary-fixed-variant": "#0000ef",
+                "surface-variant": "#31353a",
+                "on-surface": "#e0e3e8",
+                "surface-container-low": "#181c20",
+                "primary-fixed": "#e0e0ff",
+                "surface-container-highest": "#31353a",
+                "on-tertiary-container": "#bcbcbc",
+                "tertiary": "#c6c6c7",
+                "primary": "#bec2ff",
+                "secondary-container": "#404752",
+                "on-tertiary-fixed-variant": "#454747",
+                "on-surface-variant": "#c5c4db",
+                "on-tertiary": "#2f3131",
+                "background": "#101418",
+                "surface-bright": "#353a3e",
+                "surface-container-lowest": "#0a0f13",
+                "error": "#ffb4ab",
+                "outline-variant": "#454558",
+                "primary-container": "#0000ff",
+                "on-secondary-container": "#afb5c2",
+                "secondary-fixed-dim": "#c0c7d4",
+                "surface-dim": "#101418",
+                "on-secondary": "#2a313b",
+                "on-tertiary-fixed": "#1a1c1c",
+                "outline": "#8f8fa4"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "margin-desktop": "64px",
+                "margin-mobile": "20px",
+                "gutter": "24px",
+                "container-max": "1280px",
+                "unit": "8px"
+        },
+        "fontFamily": {
+                "headline-lg": [
+                        "Clash Display"
+                ],
+                "headline-md": [
+                        "Clash Display"
+                ],
+                "display-lg": [
+                        "Clash Display"
+                ],
+                "headline-lg-mobile": [
+                        "Clash Display"
+                ],
+                "label-md": [
+                        "Inter"
+                ],
+                "body-lg": [
+                        "Inter"
+                ],
+                "label-sm": [
+                        "Inter"
+                ],
+                "body-md": [
+                        "Inter"
+                ]
+        },
+        "fontSize": {
+                "headline-lg": [
+                        "48px",
+                        {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-md": [
+                        "32px",
+                        {
+                                "lineHeight": "1.3",
+                                "fontWeight": "500"
+                        }
+                ],
+                "display-lg": [
+                        "72px",
+                        {
+                                "lineHeight": "1.1",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-lg-mobile": [
+                        "32px",
+                        {
+                                "lineHeight": "1.2",
+                                "fontWeight": "600"
+                        }
+                ],
+                "label-md": [
+                        "14px",
+                        {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "1.2",
+                                "fontWeight": "500"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+    body {
+      background-color: theme('colors.surface');
+    }
+    .text-balance { text-wrap: balance; }
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(calc(-50% - 50px)); }
+    }
+    .animate-marquee {
+      display: flex;
+      width: max-content;
+      animation: scroll 30s linear infinite;
+    }
+    .marquee-container {
+      overflow: hidden;
+      width: 100%;
+    }
+  </style>
+</head>
+<body class="text-on-surface font-body-lg min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container bg-surface">
+<!-- 1. Floating Nav (TopAppBar) -->
+<header class="fixed top-[24px] left-0 right-0 z-50 flex items-center justify-center px-4 w-full pointer-events-none">
+<div class="pointer-events-auto w-full max-w-[700px] flex items-center justify-between bg-surface-container-high/80 backdrop-blur-xl rounded-full px-2 py-2 shadow-xl border border-outline-variant/30 py-4 rounded-[40px]">
+<div class="flex items-center gap-6 pl-2">
+<div class="flex items-center justify-center shrink-0"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTlcm8Okfcgp-PLzhUFvg7fsJJGyH2MLwnY6bxHflJtFrsFsNcZSCa7PbrOT2LZyjKtUaskyFatUAGB2-mp5ENsDFFLaVB4jybup08k-xX9SBgNJHLw4gOl8RtgBrvn4XjH34BEpeZK3JMgRAkTc1qdIQlfK3mxmOlqM1ZGbBMvyiqtq3H4It6dCkTDcbi4f8FTPS3gq2DvUmkNHWSe7BoYZ5CoYRPD6HWMRUB-wvnuBOm8rzVAMtXujru3810eDo7ogYQGbyNHByQAkw" alt="GMN Pro Logo" class="h-[24px] w-auto object-contain"></div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors duration-300" href="#">Serviços</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors duration-300" href="#">Resultados</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors duration-300" href="#">Sobre nós</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors duration-300" href="#">Blog</a>
+</nav>
+</div>
+<button class="bg-primary-container text-on-primary-container font-label-md rounded-full hover:bg-primary-fixed hover:text-on-primary-fixed transition-all duration-300 shrink-0 flex items-center px-4 h-[32px] font-semibold uppercase tracking-wider text-[10px]">
+        Agendar Consulta
+      </button>
+</div>
+</header>
+<main>
+<!-- 1. Hero -->
+<section class="pt-[240px] px-margin-desktop max-w-[1728px] mx-auto flex flex-col lg:flex-row items-center lg:items-end lg:justify-between relative overflow-visible bg-surface pb-[160px] gap-12">
+<div class="flex flex-col items-start text-left max-w-2xl relative z-20 lg:-mb-12">
+<h1 class="font-display-lg text-display-lg text-balance mb-8 text-on-surface tracking-tighter">Domine as buscas locais e atraia mais clientes todos os dias</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl mb-12">
+        Otimizamos seu Perfil da Empresa no Google para que sua empresa seja a primeira escolha dos clientes na sua região.
+      </p>
+<button class="bg-primary-container text-on-primary-container font-label-md rounded-full hover:bg-primary-fixed hover:text-on-primary-fixed transition-all duration-300 shrink-0 flex items-center px-8 h-[48px] font-bold uppercase tracking-wider">Começar agora</button>
+</div>
+<div class="w-full max-w-[800px] bg-surface-container overflow-hidden shadow-2xl relative z-10 rounded-[40px] h-[600px] border border-outline-variant/20 -mr-8">
+<img alt="Vibrant abstract gradient" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAr9eeBftJ1rqOyw79h24WUTp39M0GqNZiKiq6tbJfQF71pCULHiaGZqmptl8reRUWCjrlyiUpg-6RWBnZazHDJTMBTmQ3VVU6wpiQmGYxXYh_iuEW-Wm74sZQr72uUgkvK2XfbCIyXKnmP9NBaWT46J4L9S4uz022Nge4gomibG3y2imV2VawQ2vKDJCxODYd_qU0Jm3D-8Vj6S12Oybvd7uL1eb5zyV_G5XSHg1wT8ia2KxWvX6p-PA">
+<div class="absolute inset-0 bg-gradient-to-t from-surface/80 to-transparent"></div>
+</div>
+</section>
+<!-- 2. Trust Strip -->
+<section class="py-16 px-margin-desktop border-y border-outline-variant/30 max-w-[1728px] mx-auto flex flex-col items-center bg-surface relative z-30 -mt-16 bg-surface/80 backdrop-blur-md">
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-8 uppercase tracking-widest text-center hidden">Built with lorem ipsum leaders from</p>
+<div class="flex justify-center items-center opacity-100 text-on-surface-variant w-full">
+<div class="marquee-container">
+<div class="marquee-content animate-marquee flex gap-[100px] items-center text-on-surface-variant">
+<span class="font-headline-md text-headline-md font-semibold tracking-tight hover:opacity-100 hover:text-on-surface transition-all duration-300 cursor-default opacity-50">Northline</span>
+<span class="font-headline-md text-headline-md font-semibold tracking-tight hover:opacity-100 hover:text-on-surface transition-all duration-300 cursor-default opacity-50">Arcform</span>
+<span class="font-headline-md text-headline-md font-semibold tracking-tight hover:opacity-100 hover:text-on-surface transition-all duration-300 cursor-default opacity-50">Velo Group</span>
+<span class="font-headline-md text-headline-md font-semibold tracking-tight hover:opacity-100 hover:text-on-surface transition-all duration-300 cursor-default opacity-50">Posicionamento</span>
+<span class="font-headline-md text-headline-md font-semibold tracking-tight hover:opacity-100 hover:text-on-surface transition-all duration-300 cursor-default opacity-50">Visibilidade</span>
+<!-- Duplicate for seamless loop -->
+<span class="font-headline-md text-headline-md font-semibold tracking-tight hover:opacity-100 hover:text-on-surface transition-all duration-300 cursor-default opacity-50">Métricas</span>
+<span class="font-headline-md text-headline-md font-semibold tracking-tight hover:opacity-100 hover:text-on-surface transition-all duration-300 cursor-default opacity-50">Visitas</span>
+<span class="font-headline-md text-headline-md font-semibold tracking-tight hover:opacity-100 hover:text-on-surface transition-all duration-300 cursor-default opacity-50">Crescimento</span>
+<span class="font-headline-md text-headline-md font-semibold tracking-tight hover:opacity-100 hover:text-on-surface transition-all duration-300 cursor-default opacity-50">Clientes</span>
+<span class="font-headline-md text-headline-md font-semibold tracking-tight hover:opacity-100 hover:text-on-surface transition-all duration-300 cursor-default opacity-50">Meridian</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. Visibilidade Inteligente (Grid Redesign) -->
+<section class="w-full max-w-[1728px] mx-auto relative bg-surface py-32 px-margin-desktop">
+<div class="mb-20 text-center">
+<h2 class="font-display-lg text-[64px] md:text-[96px] font-bold text-on-surface tracking-tighter leading-[0.9]">Visibilidade<br>Inteligente</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="rounded-[32px] overflow-hidden bg-surface-container-high border border-outline-variant/40 shadow-xl relative h-[360px]">
+<img class="w-full h-full object-cover opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJ-rziU4HBmp5Sdc3LtdzZwOfyx8OIjM_04fxfNPucpmeLWoBVl350a-3KTjcbP9rhPH2BXdPVFnqQHFrW4n8RREH-3oSHLxTjJZI7hRykNA965ArL-TIrHouF7NiM-br08jh5BSLl_geS0A5h0AgWaUL_sFUzuZ6u5nZGNllX-IodQisA1A96Kw24nwAs9yX6IC452mFo6Jm_pOp1aU5GYGWvqDbj3Rj2nIBfFWAONPSTHhwIcDiHYg">
+<div class="absolute bottom-6 left-6 right-6 bg-surface-container-highest/90 backdrop-blur-xl border border-outline-variant/40 rounded-2xl p-5 shadow-lg">
+<div class="flex justify-between items-center mb-3">
+<span class="font-label-sm text-xs text-on-surface font-bold uppercase tracking-wider">Otimização SEO</span>
+<span class="font-label-sm text-xs text-on-surface font-bold">100%</span>
+</div>
+<div class="w-full bg-surface-variant rounded-full h-2">
+<div class="bg-primary-container w-[100%] h-2 rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="rounded-[32px] overflow-hidden bg-surface-container-high border border-outline-variant/40 shadow-xl relative h-[360px]">
+<img class="w-full h-full object-cover opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAT6X9D5cRVKL3NKN49gPO4PqLwYFf-kXMonqvMO_SYZS-Na5T7NNXE-vDMhjsa9zlAto90k_YIHG95rxe94Iz-ESCFH03-UiZoBYQAzCkbYjO_q59j76jdBRAJmSyk1fPZN3s-2czn0rMqZswzvCo4raERR0_LV3JpCJT0-DRoyK4L1UZmA9CruvajaFXkRAs69sGhfoOFX7gRAYdgrbdY6hd7iRHGN6Sq_OiU21jlJpuJ57VsNzKEAjeCCf2Cjsw7RWL2bfiUG5AV7Ak">
+<div class="absolute top-6 right-6 w-10 h-10 rounded-full bg-surface-container-highest/90 backdrop-blur-md border border-outline-variant/50 flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-on-surface">place</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="rounded-[32px] overflow-hidden bg-surface-container border border-outline-variant/40 shadow-xl relative h-[360px] flex flex-col items-center justify-center p-8 bg-surface-container-highest/50">
+<div class="rounded-[28px] overflow-hidden bg-surface-container-highest/90 backdrop-blur-xl border border-outline-variant/50 shadow-2xl flex flex-col p-6 w-full max-w-[280px]">
+<div class="flex items-center justify-between mb-6">
+<span class="font-label-md text-sm font-semibold text-on-surface">Local Maps</span>
+<div class="w-12 h-7 bg-primary-container rounded-full relative shadow-inner cursor-pointer">
+<div class="absolute right-1 top-1 w-5 h-5 bg-on-primary-container rounded-full shadow-sm"></div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-on-primary-container">star</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-sm font-bold text-on-surface">Avaliações 5 Estrelas</span>
+<span class="font-body-sm text-sm text-on-surface-variant leading-tight mt-1">Crescendo</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="rounded-[32px] overflow-hidden bg-surface-container-high border border-outline-variant/40 shadow-xl relative h-[360px]">
+<img class="w-full h-full object-cover opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxFbqKqhcL2-yi6CapWa1ZCVsaR15RLGAMqqfwfA1PugqBCNtwVXUdtQ6xmmZy4SCQV9E1QQZN8w2GkBAMQdMY1-ySmYUbumrIYfKqyLamYyib5WlhO067v34y1dD6HVZymD5qj2B76FD4z3orfEti3oHMm005-_p_WhC-tcb4QBRBfJCHJeIcqMQlNBSjVBXvVJLYGO6e9qTR9rMjcLaZl6hLEZX1oqQwbggYoYK8cYzi32h6ctzREA">
+<div class="absolute top-6 left-6 bg-surface-container-highest/90 backdrop-blur-xl px-5 py-3 rounded-full border border-outline-variant/50 shadow-md flex items-center gap-3">
+<div class="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)]"></div>
+<span class="font-label-sm text-xs font-bold text-on-surface uppercase tracking-wider">Buscas Locais</span>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="rounded-[32px] overflow-hidden bg-surface-container-high border border-outline-variant/40 shadow-xl relative h-[360px]">
+<img class="w-full h-full object-cover opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdoinVW4WzEXBGOQ_fnm1RGmNE3xZ57rwhUL4DHu434s4QKM3_vrQ3UZ9lbjwXfHR-59kPyvQ4tVJ3TzJoptDIZgwooatVndaAhYfOK0ttNQBSU_MiYcad_MBavRVG2gjzD2sjNnYn0VbXPGzqWuJ150-JcagaEQvFblgOjzCyYdJ8vCsRl95EWDZ0acP2kfKe-jgzWjF7jvdbpxRpMqluhjyrRRdMrRmbgtc5Fl4hLempxmExPIOcTA">
+<div class="absolute bottom-6 left-6 bg-surface-container-highest/90 backdrop-blur-xl px-5 py-3 rounded-full border border-outline-variant/50 shadow-md flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface">visibility</span>
+<span class="font-label-sm text-xs font-bold text-on-surface uppercase tracking-wider">Destaque Regional</span>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="rounded-[32px] overflow-hidden bg-surface-container-high border border-outline-variant/40 shadow-xl relative h-[360px] flex items-center justify-center">
+<img class="absolute inset-0 w-full h-full object-cover opacity-50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtc4VgYN7v99oZBD06e7EN1gnorMQaVJVOZBEm35gAsQV4NVRcP2NmNyQHrNJe5OIT0BqYxX9ssL76quQ7IkIiqr4ONy-WmZwUBkg7eI-TZmYP_ptNq3SUngLjb1W0vPuRRSaJ1bJniRhWhDs9bb9YhMxbC96hjvjeqKWlFz1aeAz_ie3_Sn53WV765yGvx7uot8e01fadKz53xdi3LjPDjHtghjCASFfw9YgT8NC4AHaRXAFKa8k8vQ">
+<div class="relative bg-surface-container-highest/95 backdrop-blur-xl rounded-[24px] flex items-center gap-5 p-4 shadow-2xl border border-outline-variant/50 z-20 mx-6">
+<div class="w-12 h-12 rounded-full bg-surface-container overflow-hidden shadow-sm border border-outline-variant/60 shrink-0">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxUZpAK7kBAK1H5Anlz-i_nh19XyaGUt1hLDC6ZASnuBK2vRcwFDP46vx7HodMWCGvWJVA3aKLfp00pDRGNPsH0LVYvOGBSQ1KJIx2wTCxFcEJMNlnv9DHJKT0wyVelxRunXJN3d41Z2MPDK4poxQF_iybQaYL4ebVjC52RWnq9U6Y-VA7k5seZ7Z4c1n3nq7ply6CwSNm8-OH_B6wae1-h-Zmn2y3jh9urDyal2zhahuy408MHHCcPTmA9TNKUOA7WEsjuEy1iMvC">
+</div>
+<div class="flex flex-col pr-2">
+<span class="font-label-md text-sm text-on-surface font-bold">Cliente Satisfeito</span>
+<span class="font-body-sm text-sm text-on-surface-variant leading-tight mt-1">Cheguei até vocês pelo Google!</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. Manifesto -->
+<section class="py-[200px] px-margin-desktop max-w-[1728px] mx-auto relative flex flex-col items-start text-left bg-surface border-t border-outline-variant/20">
+<div class="absolute bottom-0 right-0 w-[600px] h-[600px] opacity-5 pointer-events-none -mb-32">
+<svg class="w-full h-full" fill="none" stroke="url(#manifesto-grad)" stroke-width="0.5" viewBox="0 0 100 100">
+<defs>
+<linearGradient id="manifesto-grad" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#0000ff"></stop>
+<stop offset="100%" stop-color="#bec2ff"></stop>
+</linearGradient>
+</defs>
+<circle cx="50" cy="50" r="48"></circle>
+<ellipse cx="50" cy="50" rx="24" ry="48"></ellipse>
+<ellipse cx="50" cy="50" rx="48" ry="24"></ellipse>
+<line x1="2" x2="98" y1="50" y2="50"></line>
+<line x1="50" x2="50" y1="2" y2="98"></line>
+</svg>
+</div>
+<h2 class="font-display-lg text-[49px] leading-[1.1] text-balance tracking-tight text-on-surface relative z-10 max-w-[1000px] font-medium pl-8 border-l-[4px] border-primary-container">
+    Sua empresa no topo do Google Maps e das buscas locais. Apareça quando e onde seus clientes mais precisam de você.
+  </h2>
+</section>
+<!-- 5. Brand OS -->
+<section class="py-[120px] px-margin-desktop max-w-[1728px] mx-auto bg-surface relative z-20">
+<div class="flex flex-col gap-[60px]">
+<div class="flex flex-col justify-center h-full">
+<h3 class="font-headline-lg text-headline-lg mb-12 font-bold tracking-tight text-on-surface max-w-lg">O sistema de vendas locais<br>mais inteligente.</h3>
+<div class="relative pl-8 border-l-[3px] border-outline-variant space-y-12 max-w-lg">
+<div class="absolute left-[-3px] top-0 w-[3px] h-1/3 bg-primary-container"></div>
+<div>
+<h4 class="font-headline-md text-xl font-bold mb-3 text-on-surface">Posicionamento Estratégico</h4>
+<p class="font-body-md text-on-surface-variant leading-relaxed">Apareça exatamente quando seus clientes procuram pelo que você oferece. Otimizamos as palavras-chave locais certas.</p>
+</div>
+<div class="opacity-50 hover:opacity-100 transition-opacity">
+<h4 class="font-headline-md text-xl font-bold mb-3 text-on-surface">Reputação e Confiança</h4>
+<p class="font-body-md text-on-surface-variant leading-relaxed">Gestão de avaliações e fotos para converter visitantes em clientes. Construímos uma autoridade local imbatível para o seu negócio.</p>
+</div>
+<div class="opacity-50 hover:opacity-100 transition-opacity">
+<h4 class="font-headline-md text-xl font-bold mb-3 text-on-surface">Dados que Vendem</h4>
+<p class="font-body-md text-on-surface-variant leading-relaxed">Relatórios de desempenho e insights sobre o comportamento dos seus clientes locais para decisões focadas em vendas reais.</p>
+</div>
+</div>
+</div>
+<div class="bg-surface-container rounded-[40px] p-10 flex flex-col lg:flex-row items-center justify-between border border-outline-variant/30 gap-10 mt-8 z-10 relative">
+<div class="flex items-center gap-4">
+<span class="font-headline-md font-bold text-on-surface">Métricas de Crescimento</span>
+</div>
+<div class="flex flex-wrap items-center justify-center lg:justify-end gap-6 lg:gap-10 w-full lg:w-auto">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-container">visibility</span>
+<span class="font-body-md font-bold text-on-surface">+145% Visualizações</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-container">call</span>
+<span class="font-body-md font-bold text-on-surface">+80% Ligações</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-container">directions</span>
+<span class="font-body-md font-bold text-on-surface">+120% Rotas</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-container">language</span>
+<span class="font-body-md font-bold text-on-surface">+95% Site</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. Lumio Studio -->
+<section class="py-[120px] px-margin-desktop max-w-[1728px] mx-auto bg-surface relative z-10">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-[100px] items-center">
+<div class="flex flex-col justify-center h-full max-w-lg order-2 lg:order-1">
+<h3 class="font-headline-lg text-headline-lg mb-12 font-bold tracking-tight text-on-surface">Resultados Reais<br>em Segundos.</h3>
+<div class="relative pl-8 border-l-[3px] border-outline-variant space-y-10">
+<div class="absolute left-[-3px] top-0 w-[3px] h-1/4 bg-primary-container"></div>
+<div>
+<h4 class="font-headline-md text-xl font-bold mb-2 text-on-surface">Gestão Profissional</h4>
+<p class="font-body-md text-on-surface-variant leading-relaxed">Transforme cliques em chamadas, visitas e vendas constantes.</p>
+</div>
+<div class="opacity-60 hover:opacity-100 transition-opacity">
+<h4 class="font-headline-md text-xl font-bold mb-2 text-on-surface">Postagens Otimizadas</h4>
+<p class="font-body-md text-on-surface-variant leading-relaxed">Atualizações contínuas para engajar clientes diretamente na busca.</p>
+</div>
+<div class="opacity-60 hover:opacity-100 transition-opacity">
+<h4 class="font-headline-md text-xl font-bold mb-2 text-on-surface">Respostas Rápidas</h4>
+<p class="font-body-md text-on-surface-variant leading-relaxed">Gerenciamento ágil de avaliações e mensagens de clientes.</p>
+</div>
+<div class="opacity-60 hover:opacity-100 transition-opacity">
+<h4 class="font-headline-md text-xl font-bold mb-2 text-on-surface">Análise Competitiva</h4>
+<p class="font-body-md text-on-surface-variant leading-relaxed">Fique à frente dos concorrentes da sua região monitorando o mercado.</p>
+</div>
+</div>
+</div>
+<div class="bg-surface-container rounded-[40px] p-8 h-[700px] flex items-center justify-center relative overflow-hidden border border-outline-variant/30 shadow-inner order-1 lg:order-2">
+<div class="w-full max-w-lg bg-surface-container-high/90 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-outline-variant/50">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-[24px] h-[24px] rounded-full border border-outline-variant flex items-center justify-center shrink-0"><span class="text-on-surface font-display-lg text-[10px] leading-none font-semibold">L</span></div>
+<span class="font-label-md text-xs font-bold text-on-surface-variant">LUMIO IA</span>
+</div>
+<div class="bg-surface-container-highest/80 backdrop-blur-md rounded-xl p-4 mb-6 border border-outline-variant/50 shadow-sm">
+<p class="font-body-md text-on-surface">Gere uma postagem de oferta local destacando nossa nova promoção de serviços e incentivando ligações imediatas.</p>
+</div>
+<div class="flex justify-end">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center shadow-md animate-pulse">
+<span class="material-symbols-outlined text-on-primary-container text-sm">auto_awesome</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 8. Testimonial -->
+<section class="py-[160px] px-margin-desktop max-w-[1200px] mx-auto flex flex-col items-center text-center bg-surface relative z-30">
+<h2 class="font-display-lg text-[40px] md:text-[56px] leading-[1.1] tracking-tight text-on-surface mb-16 text-balance max-w-[1000px] font-normal">
+    "Minhas vendas aumentaram 40% em apenas um mês após a otimização do meu perfil no Google. Agora somos encontrados todos os dias."
+  </h2>
+<div class="flex items-center gap-4">
+<div class="w-14 h-14 rounded-full bg-surface-container overflow-hidden shadow-md">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_dQOYUXm-9ocUk-1cRA5ZyP6tu7OdWwNIU7SRhouWt3u89anzj3A5_pr7FGCCICOiz6a2FoSpC-bN53AYbiVQ-spgKPawBtGZtLq-9c6QyNclym7oEuOsCnQllJenEGuMkAeM3mwnTOLdgJakEE63ozCYcDA2l-C2EQnZiozAakUbDrwJG_jxTwrvV9I5p2oiVPXIDBv-rltdG9P0TX6X2OUHQcwckpskXXJEawplcI8ff_rzn1YnIDgrniF27Vjc0Lz4LKcazue9">
+</div>
+<div class="text-left">
+<p class="font-label-md text-sm font-bold text-on-surface">Carlos Almeida</p>
+<p class="font-label-sm text-xs text-on-surface-variant">Dono de Restaurante Local</p>
+</div>
+</div>
+</section>
+<section class="py-32 px-margin-desktop bg-surface">
+<div class="max-w-screen-xl mx-auto flex flex-col items-center text-center">
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-12 h-12 rounded-full border border-outline-variant flex items-center justify-center mb-12">
+<span class="text-on-surface font-display-lg text-xl leading-none font-semibold">L</span>
+</div>
+<h2 class="font-display-lg text-[56px] md:text-[80px] font-bold text-on-surface tracking-tighter leading-[1.05] mb-12 max-w-4xl text-balance">
+        Pronto para ser a empresa número 1 da sua região?
+      </h2>
+<div class="flex flex-col sm:flex-row gap-6">
+<button class="bg-primary-container text-on-primary-container font-label-md rounded-full hover:bg-primary-fixed hover:text-on-primary-fixed transition-all duration-300 shrink-0 flex items-center px-6 text-[10px] h-[40px] font-bold uppercase tracking-wider">Agendar Consultoria Gratuita</button>
+<button class="bg-transparent border border-outline-variant text-on-surface font-label-md rounded-full hover:bg-surface-container-high transition-all duration-300 shrink-0 flex items-center px-6 text-[10px] h-[40px] font-bold uppercase tracking-wider">
+          Falar no WhatsApp
+        </button>
+</div>
+</div>
+</div>
+</section></main><footer class="bg-surface-container-lowest text-on-surface pt-32 pb-16 px-margin-desktop border-t border-outline-variant/20 relative z-20">
+<div class="max-w-[1728px] mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-16">
+<!-- Brand Column -->
+<div class="flex flex-col gap-8">
+<div class="border-outline-variant flex items-center justify-center shrink-0"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOjyHbhQXH-JIPF-GFj5Szp7xtM4_3UIdQpKCd-I15Hnt-0xKv0Gg9M6crg62_4oTZvGrRM8G4Wy8jQ-mhDQIC559pfpL2S47DGD5nUj2v9vTQob1o4pYdnoCqm2LoY0KfL5Ipq57hVczmAI_pyz6syzXultSjtIJEQSIC1WKNWv_p7d4Jol-EYAl73Dus2vm9npvzSt0tQXDhDf3lYWDMCA0Dttk1kAhLL2y27-xpFJm7sNSU13hgCft_c897TXKl-lfPG9nRVKvmZ3Q" alt="GMN Pro Logo" class="h-[24px] w-auto object-contain"></div>
+<p class="font-body-md text-on-surface-variant max-w-xs">
+          Transformando buscas locais em negócios reais. A solução definitiva para otimização do Google Meu Negócio.
+        </p>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant">share</span>
+</a>
+<a class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant">public</span>
+</a>
+<a class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant">hub</span>
+</a>
+</div>
+</div>
+<!-- Navigation Columns -->
+<div>
+<h4 class="font-label-sm text-on-surface mb-6 uppercase tracking-widest text-[10px]">Serviços</h4>
+<ul class="flex flex-col gap-4">
+<li class=""><a class="font-body-md text-on-surface-variant hover:text-on-surface transition-colors" href="#">Otimização de Perfil</a></li>
+<li class=""><a class="font-body-md text-on-surface-variant hover:text-on-surface transition-colors" href="#">SEO Local</a></li>
+<li class=""><a class="font-body-md text-on-surface-variant hover:text-on-surface transition-colors" href="#">Gestão de Avaliações</a></li>
+<li class=""><a class="font-body-md text-on-surface-variant hover:text-on-surface transition-colors" href="#">Relatórios e Dados</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-sm text-on-surface mb-6 uppercase tracking-widest text-[10px]">Empresa</h4>
+<ul class="flex flex-col gap-4">
+<li class=""><a class="font-body-md text-on-surface-variant hover:text-on-surface transition-colors" href="#">Sobre nós</a></li>
+<li class=""><a class="font-body-md text-on-surface-variant hover:text-on-surface transition-colors" href="#">Casos de Sucesso</a></li>
+<li class=""><a class="font-body-md text-on-surface-variant hover:text-on-surface transition-colors" href="#">Contato</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-sm text-on-surface mb-6 uppercase tracking-widest text-[10px]">Recursos</h4>
+<ul class="flex flex-col gap-4">
+<li class=""><a class="font-body-md text-on-surface-variant hover:text-on-surface transition-colors" href="#">Blog de Dicas</a></li>
+<li class=""><a class="font-body-md text-on-surface-variant hover:text-on-surface transition-colors" href="#">E-books Gratuitos</a></li>
+<li class=""><a class="font-body-md text-on-surface-variant hover:text-on-surface transition-colors" href="#">Suporte ao Cliente</a></li>
+</ul>
+</div>
+</div>
+<div class="pt-8 border-t border-outline-variant/20 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="font-label-sm text-[11px] text-on-surface-variant">© 2024 GMN Pro. Todos os direitos reservados.</p>
+<div class="flex gap-8">
+<a class="font-label-sm text-[11px] text-on-surface-variant hover:text-on-surface transition-colors" href="#">Política de Privacidade</a>
+<a class="font-label-sm text-[11px] text-on-surface-variant hover:text-on-surface transition-colors" href="#">Termos de Serviço</a>
+</div>
+</div>
+</div>
+</footer>
+
+
+</body></html>
