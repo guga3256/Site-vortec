@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <title>Google Business Phone Motion — Vortec Marketing</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: transparent;
+      color: #e8eaed;
+      font-family: 'Roboto', 'Plus Jakarta Sans', sans-serif;
+      overflow: hidden;
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      image-rendering: -webkit-optimize-contrast;
+    }
+
+    /* Palco 3D */
+    .perspective-stage {
+      perspective: 1800px;
+      perspective-origin: 50% 50%;
+      position: relative;
+      z-index: 10;
+      transform-style: preserve-3d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @keyframes floatingMotion3D {
+      0%, 100% {
+        transform: translateY(0px) rotateZ(0deg);
+      }
+      33% {
+        transform: translateY(-8px) rotateZ(0.4deg);
+      }
+      66% {
+        transform: translateY(4px) rotateZ(-0.3deg);
+      }
+    }
+
+    .float-rig {
+      animation: floatingMotion3D 9s ease-in-out infinite;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    .phone-3d-rig {
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Bezel Titânio */
+    .phone-titanium-bezel {
+      background: linear-gradient(145deg, #1e222f 0%, #12141c 40%, #0c0e14 100%);
+      border-radius: 54px;
+      padding: 11px;
+      position: relative;
+      transform-style: preserve-3d;
+      box-shadow: 
+        0 0 0 1px rgba(255, 255, 255, 0.16),
+        0 0 0 2.5px #181b24,
+        0 0 0 4px rgba(255, 255, 255, 0.04),
+        0 10px 25px rgba(0, 0, 0, 0.5),
+        0 35px 80px -15px rgba(0, 0, 0, 0.95),
+        0 60px 140px -25px rgba(10, 16, 35, 0.7),
+        0 0 60px rgba(66, 133, 244, 0.12);
+    }
+
+    /* Botões laterais */
+    .titanium-btn-power {
+      position: absolute;
+      right: -13px;
+      top: 165px;
+      width: 4px;
+      height: 70px;
+      background: linear-gradient(to right, #2d3345, #161922);
+      border-radius: 0 4px 4px 0;
+      box-shadow: 2px 0 4px rgba(0,0,0,0.8);
+      transform: translateZ(5px);
+    }
+
+    .titanium-btn-vol-up {
+      position: absolute;
+      left: -13px;
+      top: 145px;
+      width: 4px;
+      height: 48px;
+      background: linear-gradient(to left, #2d3345, #161922);
+      border-radius: 4px 0 0 4px;
+      box-shadow: -2px 0 4px rgba(0,0,0,0.8);
+      transform: translateZ(5px);
+    }
+
+    .titanium-btn-vol-down {
+      position: absolute;
+      left: -13px;
+      top: 205px;
+      width: 4px;
+      height: 48px;
+      background: linear-gradient(to left, #2d3345, #161922);
+      border-radius: 4px 0 0 4px;
+      box-shadow: -2px 0 4px rgba(0,0,0,0.8);
+      transform: translateZ(5px);
+    }
+
+    /* Tela Interna com Tema Oficial do Google Dark (#202124) */
+    .phone-screen-viewport {
+      position: relative;
+      width: 350px;
+      height: 720px;
+      background: #202124;
+      border-radius: 44px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transform-style: preserve-3d;
+    }
+
+    @media (max-width: 480px) {
+      .phone-screen-viewport {
+        width: 320px;
+        height: 660px;
+        border-radius: 40px;
+      }
+      .phone-titanium-bezel {
+        border-radius: 48px;
+        padding: 9px;
+      }
+    }
+
+    /* Dynamic Glass Glare */
+    .specular-glare-layer {
+      position: absolute;
+      inset: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        130deg, 
+        rgba(255, 255, 255, 0.09) 0%, 
+        rgba(255, 255, 255, 0.02) 22%, 
+        transparent 45%,
+        rgba(255, 255, 255, 0.015) 75%,
+        transparent 100%
+      );
+      pointer-events: none;
+      z-index: 60;
+      transform: translateZ(30px);
+      transition: transform 0.4s ease-out;
+    }
+
+    /* Dynamic Island */
+    .dynamic-island-pill {
+      position: absolute;
+      top: 13px;
+      left: 50%;
+      transform: translateX(-50%) translateZ(28px);
+      width: 108px;
+      height: 27px;
+      background: #000000;
+      border-radius: 20px;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 11px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.8);
+      border: 0.5px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .island-lens {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #080b14;
+      border: 1px solid #161c2b;
+      position: relative;
+    }
+    .island-lens::after {
+      content: '';
+      position: absolute;
+      width: 3.5px;
+      height: 3.5px;
+      top: 2px;
+      left: 2px;
+      background: rgba(66, 133, 244, 0.85);
+      border-radius: 50%;
+      box-shadow: 0 0 4px rgba(66, 133, 244, 0.6);
+    }
+
+    .island-sensor-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #0a0d14;
+    }
+
+    .home-indicator-bar {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%) translateZ(26px);
+      width: 130px;
+      height: 4.5px;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 10px;
+      z-index: 50;
+    }
+
+    .google-maps-radar {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 2px solid rgba(66, 133, 244, 0.6);
+      background: radial-gradient(circle, rgba(66, 133, 244, 0.22) 0%, rgba(66, 133, 244, 0.04) 65%, transparent 100%);
+      pointer-events: none;
+      transition: all 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 0 25px rgba(66, 133, 244, 0.25);
+    }
+
+    .google-scene {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      transform-style: preserve-3d;
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .google-action-pill {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 10px;
+      border-radius: 20px;
+      background-color: #303134;
+      border: 1px solid #3c4043;
+      color: #8ab4f8;
+      font-size: 11px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .google-action-pill-primary {
+      background-color: #8ab4f8;
+      color: #202124;
+      border: none;
+      font-weight: 600;
+    }
+
+    .pin-shadow {
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .float-rig {
+        animation: none !important;
+      }
+      .phone-3d-rig {
+        transform: none !important;
+        transition: none !important;
+      }
+      .google-scene {
+        display: none !important;
+      }
+      #scene7 {
+        display: flex !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="perspective-stage">
+    <div class="float-rig">
+      <div id="phoneChassis" class="phone-3d-rig relative" style="transform: rotateY(-8deg) rotateX(6deg) translateZ(0px);">
+        
+        <div class="titanium-btn-power"></div>
+        <div class="titanium-btn-vol-up"></div>
+        <div class="titanium-btn-vol-down"></div>
+
+        <div class="phone-titanium-bezel">
+          <div id="phoneScreen" class="phone-screen-viewport">
+            
+            <div class="dynamic-island-pill">
+              <div class="island-lens"></div>
+              <div class="island-sensor-dot"></div>
+            </div>
+
+            <!-- Status Bar -->
+            <div class="relative z-40 px-6 pt-3.5 pb-1 flex items-center justify-between text-[11px] font-semibold text-slate-300" style="transform: translateZ(24px);">
+              <span class="tracking-tight font-sans">09:41</span>
+              <div class="flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-slate-300" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M2 18h3v-3H2v3zm5 0h3v-6H7v6zm5 0h3V8h-3v10zm5 0h3V4h-3v14z"/>
+                </svg>
+                <span class="text-[9px] font-mono tracking-tighter text-slate-300 font-bold">5G</span>
+                <div class="w-5 h-2.5 rounded-sm border border-slate-300 p-0.5 flex items-center">
+                  <div class="w-full h-full bg-slate-200 rounded-[1px]"></div>
+                </div>
+              </div>
+            </div>
+
+            <div id="glareLayer" class="specular-glare-layer"></div>
+            <div class="home-indicator-bar"></div>
+
+            <!-- Cabeçalho Google Search -->
+            <div class="relative z-30 px-3.5 pt-2 pb-2 bg-[#202124] border-b border-[#3c4043]/60" style="transform: translateZ(22px);">
+              <div class="w-full bg-[#303134] rounded-full px-3.5 py-2.5 flex items-center gap-2.5 shadow-md border border-[#3c4043]">
+                <!-- 'G' Oficial -->
+                <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24">
+                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                  <path fill="#FBBC04" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                </svg>
+
+                <div class="flex-1 flex items-center text-xs font-normal text-[#e8eaed] overflow-hidden whitespace-nowrap">
+                  <span id="googleSearchQuery" class="font-normal"></span>
+                  <span id="typingCursor" class="w-0.5 h-3.5 bg-[#4285f4] ml-0.5 animate-pulse"></span>
+                </div>
+
+                <div class="flex items-center gap-2 flex-shrink-0">
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z" fill="#4285F4"/>
+                    <path d="M19 11a7 7 0 0 1-14 0H3a9 9 0 0 0 8 8.94V22h2v-2.06A9 9 0 0 0 21 11h-2z" fill="#34A853"/>
+                  </svg>
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
+                    <path d="M3 7V5a2 2 0 0 1 2-2h2" stroke="#EA4335" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M17 3h2a2 2 0 0 1 2 2v2" stroke="#4285F4" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M21 17v2a2 2 0 0 1-2 2h-2" stroke="#34A853" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M7 21H5a2 2 0 0 1-2-2v-2" stroke="#FBBC04" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="12" cy="12" r="3" stroke="#4285F4" stroke-width="2"/>
+                  </svg>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-4 mt-2 px-2 text-[11px] font-medium text-[#9aa0a6] overflow-x-hidden border-b border-[#3c4043]/40 pb-1.5">
+                <span id="tabTodas" class="text-[#8ab4f8] border-b-2 border-[#8ab4f8] pb-1">Todas</span>
+                <span id="tabMapas" class="hover:text-[#e8eaed] pb-1">Mapas</span>
+                <span class="hover:text-[#e8eaed] pb-1">Imagens</span>
+                <span class="hover:text-[#e8eaed] pb-1">Notícias</span>
+                <span class="hover:text-[#e8eaed] pb-1">Shopping</span>
+              </div>
+            </div>
+
+            <!-- Palco Interno -->
+            <div class="relative flex-1 w-full overflow-hidden bg-[#202124]">
+              
+              <!-- Google Maps Dark -->
+              <div id="googleMapLayer" class="absolute inset-0 transition-opacity duration-1000 pointer-events-none opacity-0" style="transform: translateZ(4px);">
+                <svg class="w-full h-full object-cover" viewBox="0 0 360 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="360" height="520" fill="#1f1f1f" />
+                  <path d="M-20 40 Q 80 80 150 30 T 290 60 L 340 -10 L -20 -10 Z" fill="#1b281f" />
+                  <path d="M220 360 Q 280 340 370 380 L 370 530 L 190 530 Z" fill="#1b281f" />
+                  <path d="M-10 440 Q 90 410 180 460 T 370 420 L 370 530 L -10 530 Z" fill="#182333" />
+                  <g stroke="#282828" stroke-width="1.2">
+                    <line x1="0" y1="100" x2="360" y2="100" />
+                    <line x1="0" y1="180" x2="360" y2="180" />
+                    <line x1="0" y1="270" x2="360" y2="270" />
+                    <line x1="0" y1="360" x2="360" y2="360" />
+                    <line x1="75" y1="0" x2="75" y2="520" />
+                    <line x1="175" y1="0" x2="175" y2="520" />
+                    <line x1="265" y1="0" x2="265" y2="520" />
+                  </g>
+                  <g stroke="#333333" stroke-linecap="round">
+                    <path d="M-20 150 C 70 140, 160 170, 370 130" stroke-width="7" />
+                    <path d="M120 -20 C 130 150, 165 300, 145 540" stroke-width="7" />
+                    <path d="M-20 330 C 110 320, 220 350, 370 320" stroke-width="6" />
+                    <path d="M245 -20 C 255 170, 225 380, 255 540" stroke-width="5" />
+                  </g>
+                  <g stroke="#444444" stroke-linecap="round">
+                    <path d="M-20 150 C 70 140, 160 170, 370 130" stroke-width="2" />
+                    <path d="M120 -20 C 130 150, 165 300, 145 540" stroke-width="2" />
+                  </g>
+                </svg>
+
+                <div id="googlePins" class="absolute inset-0 pointer-events-none" style="transform: translateZ(14px);">
+                  <div class="absolute top-[105px] left-[70px] transform -translate-x-1/2 -translate-y-full pin-shadow">
+                    <div class="flex flex-col items-center">
+                      <span class="px-1.5 py-0.5 bg-[#303134] text-[8px] font-medium text-white rounded border border-[#5f6368] mb-0.5 whitespace-nowrap">Clínica Sorriso</span>
+                      <svg class="w-5 h-6 text-[#ea4335]" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <div class="absolute top-[95px] right-[45px] transform -translate-x-1/2 -translate-y-full pin-shadow">
+                    <div class="flex flex-col items-center">
+                      <span class="px-1.5 py-0.5 bg-[#303134] text-[8px] font-medium text-white rounded border border-[#5f6368] mb-0.5 whitespace-nowrap">Odonto Prime</span>
+                      <svg class="w-5 h-6 text-[#ea4335]" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <div id="pinGoogleSuaEmpresa" class="absolute top-[175px] left-[175px] transform -translate-x-1/2 -translate-y-full transition-all duration-1000 z-30 pin-shadow">
+                    <div id="googleRadar" class="google-maps-radar w-8 h-8 opacity-0"></div>
+                    <div class="flex flex-col items-center relative">
+                      <div id="googlePinBadge" class="px-2 py-0.5 rounded-full bg-[#303134] border border-[#5f6368] text-[9px] text-white font-medium whitespace-nowrap shadow-lg mb-0.5 flex items-center gap-1 transition-all duration-700">
+                        <span id="pinRankText" class="w-3.5 h-3.5 rounded-full bg-[#5f6368] text-[8px] flex items-center justify-center font-bold">#7</span>
+                        <span>Sua Empresa</span>
+                      </div>
+                      <svg id="pinSvgIcon" class="w-6 h-7 text-[#9aa0a6] transition-colors duration-700" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CENA 1: PESQUISA -->
+              <div id="scene1" class="google-scene justify-center px-5 opacity-100 z-20" style="transform: translateZ(16px);">
+                <div class="text-center mb-6">
+                  <div class="flex items-center justify-center gap-1 text-3xl font-medium tracking-tight mb-2 select-none">
+                    <span class="text-[#4285f4] font-bold">G</span>
+                    <span class="text-[#ea4335] font-bold">o</span>
+                    <span class="text-[#fbbc04] font-bold">o</span>
+                    <span class="text-[#4285f4] font-bold">g</span>
+                    <span class="text-[#34a853] font-bold">l</span>
+                    <span class="text-[#ea4335] font-bold">e</span>
+                  </div>
+                  <div class="text-xs text-[#9aa0a6]">Pesquisa local no Google</div>
+                </div>
+
+                <div class="bg-[#303134] rounded-2xl p-4 shadow-xl border border-[#3c4043]/80 mb-4">
+                  <div class="text-[11px] text-[#9aa0a6] uppercase tracking-wider mb-2 font-medium">Pesquisas recentes</div>
+                  <div class="flex items-center gap-2.5 py-1 text-xs text-[#e8eaed]">
+                    <svg class="w-3.5 h-3.5 text-[#9aa0a6]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span>dentista perto de mim</span>
+                  </div>
+                  <div class="flex items-center gap-2.5 py-1 text-xs text-[#9aa0a6]">
+                    <svg class="w-3.5 h-3.5 text-[#9aa0a6]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span>clínica odontológica aberta agora</span>
+                  </div>
+                </div>
+
+                <div id="scene1Searching" class="flex items-center justify-center gap-2 text-xs text-[#8ab4f8] transition-opacity duration-700 opacity-0">
+                  <div class="w-3.5 h-3.5 border-2 border-[#8ab4f8]/30 border-t-[#8ab4f8] rounded-full animate-spin"></div>
+                  <span>Buscando empresas no Google Maps...</span>
+                </div>
+              </div>
+
+              <!-- CENA 2: RESULTADOS LOCAIS -->
+              <div id="scene2" class="google-scene justify-end p-3.5 opacity-0 pointer-events-none z-20" style="transform: translateZ(18px);">
+                <div class="space-y-2 mb-4">
+                  <div class="flex items-center justify-between px-1 text-[11px] text-[#9aa0a6] font-medium">
+                    <span>Empresas &bull; Google Maps</span>
+                    <span class="text-[#8ab4f8]">Filtros</span>
+                  </div>
+
+                  <div class="bg-[#303134] border border-[#3c4043] rounded-xl p-3 shadow-md">
+                    <div class="flex justify-between items-start">
+                      <div>
+                        <div class="text-xs font-medium text-white">Clínica Sorriso</div>
+                        <div class="flex items-center gap-1 text-[11px] mt-0.5">
+                          <span class="text-white font-bold">4.9</span>
+                          <span class="text-[#fbbc04]">★★★★★</span>
+                          <span class="text-[#9aa0a6]">(142)</span>
+                        </div>
+                        <div class="text-[10px] text-[#34a853] font-medium mt-0.5">● Aberto &bull; Fecha às 19:00</div>
+                      </div>
+                      <div class="w-7 h-7 rounded-full bg-[#202124] flex items-center justify-center text-[#8ab4f8] border border-[#3c4043]">
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="bg-[#303134] border border-[#3c4043] rounded-xl p-3 shadow-md">
+                    <div class="flex justify-between items-start">
+                      <div>
+                        <div class="text-xs font-medium text-white">Odonto Prime</div>
+                        <div class="flex items-center gap-1 text-[11px] mt-0.5">
+                          <span class="text-white font-bold">4.8</span>
+                          <span class="text-[#fbbc04]">★★★★★</span>
+                          <span class="text-[#9aa0a6]">(89)</span>
+                        </div>
+                        <div class="text-[10px] text-[#34a853] font-medium mt-0.5">● Aberto &bull; Fecha às 18:30</div>
+                      </div>
+                      <div class="w-7 h-7 rounded-full bg-[#202124] flex items-center justify-center text-[#8ab4f8] border border-[#3c4043]">
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div id="cardSuaEmpresaCena2" class="bg-[#303134] border border-[#3c4043] rounded-xl p-3 shadow-xl transition-all duration-1000">
+                    <div class="flex justify-between items-start">
+                      <div>
+                        <div class="text-xs font-semibold text-white">Sua Empresa</div>
+                        <div class="flex items-center gap-1 text-[11px] mt-0.5">
+                          <span class="text-white font-bold">4.5</span>
+                          <span class="text-[#fbbc04]">★★★★☆</span>
+                          <span class="text-[#9aa0a6]">(18)</span>
+                        </div>
+                        <div class="text-[10px] text-[#34a853] font-medium mt-0.5">● Aberto &bull; Fecha às 18:00</div>
+                      </div>
+                      <span id="scene2RankPill" class="px-2 py-0.5 rounded bg-[#202124] text-[10px] text-[#9aa0a6] font-mono border border-[#3c4043]">
+                        #7 no Google
+                      </span>
+                    </div>
+
+                    <div class="mt-2.5 pt-2 border-t border-[#3c4043] flex items-center justify-between text-[10px]">
+                      <span id="scene2NoticeText" class="text-[#9aa0a6] transition-opacity duration-700 opacity-0">Baixa visibilidade na região</span>
+                      <span id="scene2PosText" class="text-[#fbbc04] font-medium transition-opacity duration-700 opacity-0">Posição local: #7</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CENA 3: ANÁLISE GOOGLE MEU NEGÓCIO -->
+              <div id="scene3" class="google-scene justify-center px-4 opacity-0 pointer-events-none z-20" style="transform: translateZ(20px);">
+                <div class="bg-[#303134] border border-[#3c4043] rounded-2xl p-4 shadow-2xl">
+                  <div class="flex items-center justify-between pb-3 border-b border-[#3c4043] mb-3">
+                    <div class="flex items-center gap-2.5">
+                      <div class="w-7 h-7 rounded-lg bg-[#4285f4]/15 border border-[#4285f4]/30 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-[#8ab4f8]" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z"/>
+                        </svg>
+                      </div>
+                      <div>
+                        <div class="text-xs font-semibold text-white">Google Meu Negócio</div>
+                        <div class="text-[9px] text-[#8ab4f8]">Analisando presença local...</div>
+                      </div>
+                    </div>
+                    <div class="w-4 h-4 border-2 border-[#8ab4f8]/30 border-t-[#8ab4f8] rounded-full animate-spin"></div>
+                  </div>
+
+                  <div class="w-full bg-[#202124] rounded-full h-1.5 overflow-hidden mb-3.5">
+                    <div id="googleAnalysisBar" class="h-full bg-gradient-to-r from-[#4285f4] via-[#fbbc04] to-[#34a853] rounded-full w-0 transition-all duration-500"></div>
+                  </div>
+
+                  <div class="space-y-1.5 text-xs">
+                    <div id="gAudit1" class="flex items-center justify-between py-1 px-2 rounded-lg bg-[#202124] text-[#9aa0a6] transition-all duration-500 opacity-30">
+                      <span class="text-[11px]">Perfil da Empresa</span>
+                      <span class="g-dot w-1.5 h-1.5 rounded-full bg-[#8ab4f8]"></span>
+                    </div>
+                    <div id="gAudit2" class="flex items-center justify-between py-1 px-2 rounded-lg bg-[#202124] text-[#9aa0a6] transition-all duration-500 opacity-30">
+                      <span class="text-[11px]">Categorias do Google</span>
+                      <span class="g-dot w-1.5 h-1.5 rounded-full bg-[#8ab4f8]"></span>
+                    </div>
+                    <div id="gAudit3" class="flex items-center justify-between py-1 px-2 rounded-lg bg-[#202124] text-[#9aa0a6] transition-all duration-500 opacity-30">
+                      <span class="text-[11px]">Área de cobertura no Maps</span>
+                      <span class="g-dot w-1.5 h-1.5 rounded-full bg-[#8ab4f8]"></span>
+                    </div>
+                    <div id="gAudit4" class="flex items-center justify-between py-1 px-2 rounded-lg bg-[#202124] text-[#9aa0a6] transition-all duration-500 opacity-30">
+                      <span class="text-[11px]">Avaliações e comentários</span>
+                      <span class="g-dot w-1.5 h-1.5 rounded-full bg-[#8ab4f8]"></span>
+                    </div>
+                    <div id="gAudit5" class="flex items-center justify-between py-1 px-2 rounded-lg bg-[#202124] text-[#9aa0a6] transition-all duration-500 opacity-30">
+                      <span class="text-[11px]">Conteúdo e fotos</span>
+                      <span class="g-dot w-1.5 h-1.5 rounded-full bg-[#8ab4f8]"></span>
+                    </div>
+                    <div id="gAudit6" class="flex items-center justify-between py-1 px-2 rounded-lg bg-[#202124] text-[#9aa0a6] transition-all duration-500 opacity-30">
+                      <span class="text-[11px]">SEO Local no Google Search</span>
+                      <span class="g-dot w-1.5 h-1.5 rounded-full bg-[#8ab4f8]"></span>
+                    </div>
+                  </div>
+
+                  <div id="googleAuditFinished" class="mt-3 pt-2 border-t border-[#3c4043] text-center text-[10px] font-medium text-[#81c995] transition-opacity duration-500 opacity-0 flex items-center justify-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#34a853]"></span>
+                    <span>Perfil analisado com sucesso</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CENA 4: OTIMIZAÇÃO NO GOOGLE -->
+              <div id="scene4" class="google-scene justify-center px-4 opacity-0 pointer-events-none z-20" style="transform: translateZ(22px);">
+                <div class="bg-[#303134] border border-[#3c4043] rounded-2xl p-4 shadow-2xl">
+                  <div class="mb-3 pb-2.5 border-b border-[#3c4043] flex items-center justify-between">
+                    <div>
+                      <div class="text-xs font-semibold text-white">Otimizando no Google</div>
+                      <div class="text-[9px] text-[#8ab4f8] mt-0.5">Força do perfil da empresa</div>
+                    </div>
+                    <div class="flex items-center gap-1 text-[10px] text-[#81c995] font-medium">
+                      <span class="w-2 h-2 rounded-full bg-[#34a853] animate-pulse"></span>
+                      <span id="gProfileStrength">Otimizando</span>
+                    </div>
+                  </div>
+
+                  <div class="space-y-2 text-xs">
+                    <div id="gOptItem1" class="flex items-center justify-between p-2 rounded-xl bg-[#202124] border border-[#3c4043] transition-all duration-700 opacity-30">
+                      <span class="text-[#e8eaed] text-[11px]">Perfil 100% preenchido</span>
+                      <span class="g-check text-[#81c995] font-bold opacity-0 transition-opacity">✓</span>
+                    </div>
+                    <div id="gOptItem2" class="flex items-center justify-between p-2 rounded-xl bg-[#202124] border border-[#3c4043] transition-all duration-700 opacity-30">
+                      <span class="text-[#e8eaed] text-[11px]">Categorias ajustadas</span>
+                      <span class="g-check text-[#81c995] font-bold opacity-0 transition-opacity">✓</span>
+                    </div>
+                    <div id="gOptItem3" class="flex items-center justify-between p-2 rounded-xl bg-[#202124] border border-[#3c4043] transition-all duration-700 opacity-30">
+                      <span class="text-[#e8eaed] text-[11px]">SEO Local & Palavras-chave</span>
+                      <span class="g-check text-[#81c995] font-bold opacity-0 transition-opacity">✓</span>
+                    </div>
+                    <div id="gOptItem4" class="flex items-center justify-between p-2 rounded-xl bg-[#202124] border border-[#3c4043] transition-all duration-700 opacity-30">
+                      <span class="text-[#e8eaed] text-[11px]">Fotos em alta resolução</span>
+                      <span class="g-check text-[#81c995] font-bold opacity-0 transition-opacity">✓</span>
+                    </div>
+                    <div id="gOptItem5" class="flex items-center justify-between p-2 rounded-xl bg-[#202124] border border-[#3c4043] transition-all duration-700 opacity-30">
+                      <span class="text-[#e8eaed] text-[11px]">Avaliações e reputação 5★</span>
+                      <span class="g-check text-[#81c995] font-bold opacity-0 transition-opacity">✓</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CENA 5: VISIBILIDADE GOOGLE MAPS -->
+              <div id="scene5" class="google-scene justify-end p-3.5 opacity-0 pointer-events-none z-20" style="transform: translateZ(24px);">
+                <div class="bg-[#303134] border border-[#3c4043] rounded-2xl p-4 shadow-2xl mb-4">
+                  <div class="text-[10px] uppercase tracking-wider text-[#9aa0a6] mb-1 flex items-center justify-between font-medium">
+                    <span>DESEMPENHO NO GOOGLE</span>
+                    <span class="text-[#8ab4f8] font-medium flex items-center gap-1">
+                      <span class="w-1.5 h-1.5 rounded-full bg-[#4285f4] animate-pulse"></span>
+                      Top 3 Alcançado
+                    </span>
+                  </div>
+
+                  <div class="flex items-baseline justify-between py-1.5">
+                    <span class="text-xs text-[#e8eaed]">Visibilidade no Google Maps</span>
+                    <span id="googleVisCounter" class="text-2xl font-bold text-[#8ab4f8] font-mono transition-all duration-500">32%</span>
+                  </div>
+
+                  <div class="w-full bg-[#202124] rounded-full h-1.5 overflow-hidden mt-1">
+                    <div id="googleVisBar" class="h-full bg-gradient-to-r from-[#4285f4] via-[#8ab4f8] to-[#81c995] rounded-full w-[32%] transition-all duration-1000"></div>
+                  </div>
+
+                  <div class="text-[9px] text-[#9aa0a6] mt-2 flex justify-between">
+                    <span>Posição anterior: #7</span>
+                    <span class="text-[#81c995] font-medium">+44% de alcance local</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CENA 6: INSIGHTS DO GOOGLE -->
+              <div id="scene6" class="google-scene justify-center px-4 opacity-0 pointer-events-none z-20" style="transform: translateZ(22px);">
+                <div class="text-center mb-3">
+                  <span class="text-[10px] text-[#8ab4f8] uppercase font-semibold tracking-wider">Google Business Insights</span>
+                  <div class="text-xs text-white font-medium mt-0.5">Interações de clientes no Google</div>
+                </div>
+
+                <div class="space-y-2.5">
+                  <div id="gMetric1" class="bg-[#303134] border border-[#3c4043] rounded-xl p-3 shadow-lg flex items-center justify-between opacity-0 transform translate-y-2 transition-all duration-700">
+                    <div>
+                      <div class="text-[10px] text-[#9aa0a6] font-medium">Visualizações da ficha no Google</div>
+                      <div class="text-lg font-bold text-white mt-0.5">↑ 68%</div>
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-[#4285f4]/15 flex items-center justify-center text-[#8ab4f8]">
+                      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <div id="gMetric2" class="bg-[#303134] border border-[#3c4043] rounded-xl p-3 shadow-lg flex items-center justify-between opacity-0 transform translate-y-2 transition-all duration-700">
+                    <div>
+                      <div class="text-[10px] text-[#9aa0a6] font-medium">Solicitações de rotas no Maps</div>
+                      <div class="text-lg font-bold text-[#81c995] mt-0.5">↑ 42%</div>
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-[#34a853]/15 flex items-center justify-center text-[#81c995]">
+                      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <div id="gMetric3" class="bg-[#303134] border border-[#3c4043] rounded-xl p-3 shadow-lg flex items-center justify-between opacity-0 transform translate-y-2 transition-all duration-700">
+                    <div>
+                      <div class="text-[10px] text-[#9aa0a6] font-medium">Chamadas telefônicas diretas</div>
+                      <div class="text-lg font-bold text-[#8ab4f8] mt-0.5">↑ 37%</div>
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-[#4285f4]/15 flex items-center justify-center text-[#8ab4f8]">
+                      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="text-center text-[9px] text-[#9aa0a6] mt-3">
+                  Exemplo de evolução no Google
+                </div>
+              </div>
+
+              <!-- CENA 7: FICHA GOOGLE VERIFICADA -->
+              <div id="scene7" class="google-scene justify-end p-3.5 opacity-0 pointer-events-none z-20" style="transform: translateZ(26px);">
+                <div class="bg-[#303134] border border-[#5f6368] rounded-2xl p-4 shadow-2xl mb-4">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="inline-flex items-center gap-1.5 text-[10px] text-[#8ab4f8] font-medium">
+                      <svg class="w-3.5 h-3.5 text-[#4285f4]" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                      </svg>
+                      Empresa Verificada no Google
+                    </span>
+                    <span class="text-[9px] font-medium text-[#81c995] flex items-center gap-1">
+                      <span class="w-1.5 h-1.5 rounded-full bg-[#34a853] animate-pulse"></span>
+                      Aberto agora
+                    </span>
+                  </div>
+
+                  <div class="mb-3">
+                    <div class="text-sm font-bold text-white tracking-tight">Sua Empresa</div>
+                    <div class="flex items-center gap-1.5 text-xs mt-0.5">
+                      <span class="text-white font-bold">4.9</span>
+                      <span class="text-[#fbbc04]">★★★★★</span>
+                      <span class="text-[#9aa0a6] text-[11px]">(64 avaliações no Google)</span>
+                    </div>
+                    <div class="text-[10px] text-[#9aa0a6] mt-0.5">Dentista &bull; Perfil otimizado</div>
+                  </div>
+
+                  <div class="grid grid-cols-3 gap-1.5 pt-1">
+                    <div class="google-action-pill google-action-pill-primary cursor-default">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                      </svg>
+                      <span>Ligar</span>
+                    </div>
+
+                    <div class="google-action-pill cursor-default">
+                      <svg class="w-3.5 h-3.5 text-[#8ab4f8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                      </svg>
+                      <span>Rotas</span>
+                    </div>
+
+                    <div class="google-action-pill cursor-default">
+                      <svg class="w-3.5 h-3.5 text-[#8ab4f8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                      </svg>
+                      <span>Website</span>
+                    </div>
+                  </div>
+
+                  <div class="mt-3 pt-2.5 border-t border-[#3c4043] flex items-center justify-between text-xs font-medium">
+                    <span id="gFinalTag1" class="text-[#8ab4f8] opacity-0 transition-opacity duration-700">&bull; Mais presença.</span>
+                    <span id="gFinalTag2" class="text-[#81c995] opacity-0 transition-opacity duration-700">&bull; Mais oportunidades.</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const chassis = document.getElementById('phoneChassis');
+    const glareLayer = document.getElementById('glareLayer');
+
+    const sceneCameraAngles = {
+      1: { rotX: 6, rotY: -8, z: 0, scale: 1 },
+      2: { rotX: 4, rotY: -11, z: 12, scale: 1.01 },
+      3: { rotX: 8, rotY: -3, z: 25, scale: 1.02 },
+      4: { rotX: 5, rotY: 6, z: 20, scale: 1.015 },
+      5: { rotX: 11, rotY: -9, z: 32, scale: 1.025 },
+      6: { rotX: 6, rotY: 7, z: 22, scale: 1.02 },
+      7: { rotX: 3, rotY: -4, z: 38, scale: 1.035 },
+    };
+
+    let targetRotX = sceneCameraAngles[1].rotX;
+    let targetRotY = sceneCameraAngles[1].rotY;
+    let targetZ = sceneCameraAngles[1].z;
+    let targetScale = sceneCameraAngles[1].scale;
+
+    let curRotX = targetRotX;
+    let curRotY = targetRotY;
+    let curZ = targetZ;
+    let curScale = targetScale;
+
+    let mouseOffsetX = 0;
+    let mouseOffsetY = 0;
+
+    const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+    if (!isTouch) {
+      window.addEventListener('mousemove', (e) => {
+        const { innerWidth, innerHeight } = window;
+        const normX = (e.clientX / innerWidth) - 0.5;
+        const normY = (e.clientY / innerHeight) - 0.5;
+        mouseOffsetX = normX * 3.5;
+        mouseOffsetY = -normY * 2.5;
+      });
+
+      window.addEventListener('mouseleave', () => {
+        mouseOffsetX = 0;
+        mouseOffsetY = 0;
+      });
+
+      function update3DMotion() {
+        curRotX += ((targetRotX + mouseOffsetY) - curRotX) * 0.05;
+        curRotY += ((targetRotY + mouseOffsetX) - curRotY) * 0.05;
+        curZ += (targetZ - curZ) * 0.05;
+        curScale += (targetScale - curScale) * 0.05;
+
+        chassis.style.transform = `rotateY(${curRotY.toFixed(2)}deg) rotateX(${curRotX.toFixed(2)}deg) translateZ(${curZ.toFixed(1)}px) scale(${curScale.toFixed(3)})`;
+        
+        if (glareLayer) {
+          const glareShiftX = (curRotY * 1.5).toFixed(1);
+          const glareShiftY = (curRotX * 1.5).toFixed(1);
+          glareLayer.style.transform = `translate3d(${glareShiftX}%, ${glareShiftY}%, 30px)`;
+        }
+
+        requestAnimationFrame(update3DMotion);
+      }
+      requestAnimationFrame(update3DMotion);
+    }
+
+    const TOTAL_DURATION = 32000;
+    let startTime = performance.now();
+
+    const googleMapLayer = document.getElementById('googleMapLayer');
+    const pinSvgIcon = document.getElementById('pinSvgIcon');
+    const googlePinBadge = document.getElementById('googlePinBadge');
+    const pinRankText = document.getElementById('pinRankText');
+    const googleRadar = document.getElementById('googleRadar');
+
+    const tabTodas = document.getElementById('tabTodas');
+    const tabMapas = document.getElementById('tabMapas');
+
+    const scenes = {
+      1: document.getElementById('scene1'),
+      2: document.getElementById('scene2'),
+      3: document.getElementById('scene3'),
+      4: document.getElementById('scene4'),
+      5: document.getElementById('scene5'),
+      6: document.getElementById('scene6'),
+      7: document.getElementById('scene7'),
+    };
+
+    const googleSearchQuery = document.getElementById('googleSearchQuery');
+    const scene1Searching = document.getElementById('scene1Searching');
+    const fullQuery = "dentista perto de mim";
+
+    const cardSuaEmpresaCena2 = document.getElementById('cardSuaEmpresaCena2');
+    const scene2NoticeText = document.getElementById('scene2NoticeText');
+    const scene2PosText = document.getElementById('scene2PosText');
+
+    const googleAnalysisBar = document.getElementById('googleAnalysisBar');
+    const gAudits = [
+      document.getElementById('gAudit1'),
+      document.getElementById('gAudit2'),
+      document.getElementById('gAudit3'),
+      document.getElementById('gAudit4'),
+      document.getElementById('gAudit5'),
+      document.getElementById('gAudit6'),
+    ];
+    const googleAuditFinished = document.getElementById('googleAuditFinished');
+
+    const gOptItems = [
+      document.getElementById('gOptItem1'),
+      document.getElementById('gOptItem2'),
+      document.getElementById('gOptItem3'),
+      document.getElementById('gOptItem4'),
+      document.getElementById('gOptItem5'),
+    ];
+    const gProfileStrength = document.getElementById('gProfileStrength');
+
+    const googleVisCounter = document.getElementById('googleVisCounter');
+    const googleVisBar = document.getElementById('googleVisBar');
+
+    const gMetric1 = document.getElementById('gMetric1');
+    const gMetric2 = document.getElementById('gMetric2');
+    const gMetric3 = document.getElementById('gMetric3');
+
+    const gFinalTag1 = document.getElementById('gFinalTag1');
+    const gFinalTag2 = document.getElementById('gFinalTag2');
+
+    function applyCameraForScene(sceneNum) {
+      const cam = sceneCameraAngles[sceneNum];
+      if (cam) {
+        targetRotX = cam.rotX;
+        targetRotY = cam.rotY;
+        targetZ = cam.z;
+        targetScale = cam.scale;
+      }
+    }
+
+    function setScene(num, customOpacity = 1) {
+      applyCameraForScene(num);
+      for (let s in scenes) {
+        const sc = scenes[s];
+        if (parseInt(s) === num) {
+          sc.style.opacity = customOpacity.toString();
+          sc.style.pointerEvents = 'auto';
+          sc.style.transform = 'translateZ(18px) translateY(0px)';
+        } else {
+          sc.style.opacity = '0';
+          sc.style.pointerEvents = 'none';
+          sc.style.transform = 'translateZ(0px) translateY(8px)';
+        }
+      }
+    }
+
+    function renderFrame(timeMs) {
+      const t = timeMs % TOTAL_DURATION;
+
+      // CENA 1 (0 a 5s)
+      if (t >= 0 && t < 5000) {
+        const inOpacity = t < 400 ? (t / 400) : 1;
+        setScene(1, inOpacity);
+        googleMapLayer.style.opacity = '0';
+        googleRadar.style.opacity = '0';
+
+        tabTodas.className = "text-[#8ab4f8] border-b-2 border-[#8ab4f8] pb-1 cursor-default";
+        tabMapas.className = "hover:text-[#e8eaed] pb-1 cursor-default";
+
+        pinSvgIcon.className = "w-6 h-7 text-[#9aa0a6] transition-colors duration-700";
+        googlePinBadge.className = "px-2 py-0.5 rounded-full bg-[#303134] border border-[#5f6368] text-[9px] text-white font-medium whitespace-nowrap shadow-lg mb-0.5 flex items-center gap-1 transition-all duration-700";
+        pinRankText.innerText = "#7";
+        pinRankText.className = "w-3.5 h-3.5 rounded-full bg-[#5f6368] text-[8px] flex items-center justify-center font-bold";
+
+        if (t < 600) {
+          googleSearchQuery.innerText = "";
+          scene1Searching.style.opacity = '0';
+        } else if (t >= 600 && t < 3200) {
+          const progress = (t - 600) / 2600;
+          const charCount = Math.floor(progress * fullQuery.length);
+          googleSearchQuery.innerText = fullQuery.slice(0, charCount);
+          scene1Searching.style.opacity = '0';
+        } else if (t >= 3200 && t < 4200) {
+          googleSearchQuery.innerText = fullQuery;
+          scene1Searching.style.opacity = '0';
+        } else {
+          googleSearchQuery.innerText = fullQuery;
+          scene1Searching.style.opacity = '1';
+        }
+      }
+
+      // CENA 2 (5s a 10s)
+      else if (t >= 5000 && t < 10000) {
+        setScene(2);
+        googleMapLayer.style.opacity = '0.9';
+        googleRadar.style.opacity = '0';
+
+        tabTodas.className = "hover:text-[#e8eaed] pb-1 cursor-default";
+        tabMapas.className = "text-[#8ab4f8] border-b-2 border-[#8ab4f8] pb-1 cursor-default";
+
+        const t2 = t - 5000;
+        if (t2 < 1200) {
+          cardSuaEmpresaCena2.style.borderColor = '#3c4043';
+          scene2NoticeText.style.opacity = '0';
+          scene2PosText.style.opacity = '0';
+        } else if (t2 >= 1200 && t2 < 2800) {
+          cardSuaEmpresaCena2.style.borderColor = 'rgba(66, 133, 244, 0.7)';
+          scene2NoticeText.style.opacity = '1';
+          scene2PosText.style.opacity = '0';
+        } else {
+          cardSuaEmpresaCena2.style.borderColor = 'rgba(66, 133, 244, 0.95)';
+          scene2NoticeText.style.opacity = '1';
+          scene2PosText.style.opacity = '1';
+        }
+      }
+
+      // CENA 3 (10s a 14s)
+      else if (t >= 10000 && t < 14000) {
+        setScene(3);
+        googleMapLayer.style.opacity = '0.15';
+        googleRadar.style.opacity = '0';
+
+        const t3 = t - 10000;
+        const progressPct = Math.min(100, Math.floor((t3 / 3400) * 100));
+        googleAnalysisBar.style.width = `${progressPct}%`;
+
+        const step = 450;
+        gAudits.forEach((el, i) => {
+          const startTimeItem = 300 + (i * step);
+          if (t3 >= startTimeItem) {
+            el.style.opacity = '1';
+            el.style.color = '#e8eaed';
+            const dot = el.querySelector('.g-dot');
+            if (dot) dot.className = "g-dot w-1.5 h-1.5 rounded-full bg-[#8ab4f8]";
+          } else {
+            el.style.opacity = '0.3';
+            el.style.color = '#9aa0a6';
+            const dot = el.querySelector('.g-dot');
+            if (dot) dot.className = "g-dot w-1.5 h-1.5 rounded-full bg-[#5f6368]";
+          }
+        });
+
+        if (t3 >= 3300) {
+          googleAuditFinished.style.opacity = '1';
+        } else {
+          googleAuditFinished.style.opacity = '0';
+        }
+      }
+
+      // CENA 4 (14s a 19s)
+      else if (t >= 14000 && t < 19000) {
+        setScene(4);
+        googleMapLayer.style.opacity = '0.15';
+        googleRadar.style.opacity = '0';
+
+        const t4 = t - 14000;
+        const stepOpt = 750;
+        let completedCount = 0;
+
+        gOptItems.forEach((el, i) => {
+          const trigger = 350 + (i * stepOpt);
+          const mark = el.querySelector('.g-check');
+          if (t4 >= trigger) {
+            completedCount++;
+            el.style.opacity = '1';
+            el.style.borderColor = 'rgba(66, 133, 244, 0.6)';
+            if (mark) mark.style.opacity = '1';
+          } else {
+            el.style.opacity = '0.3';
+            el.style.borderColor = '#3c4043';
+            if (mark) mark.style.opacity = '0';
+          }
+        });
+
+        if (completedCount >= 4) {
+          gProfileStrength.innerText = "Excelente (100%)";
+          gProfileStrength.className = "text-[#81c995] font-semibold";
+        } else {
+          gProfileStrength.innerText = "Otimizando...";
+          gProfileStrength.className = "text-[#fbbc04]";
+        }
+      }
+
+      // CENA 5 (19s a 24s)
+      else if (t >= 19000 && t < 24000) {
+        setScene(5);
+        googleMapLayer.style.opacity = '0.9';
+        googleRadar.style.opacity = '1';
+
+        pinSvgIcon.className = "w-7 h-8 text-[#4285f4] transition-colors duration-500 filter drop-shadow-[0_0_10px_rgba(66,133,244,0.6)]";
+        googlePinBadge.className = "px-2 py-0.5 rounded-full bg-[#303134] border border-[#8ab4f8] text-[9px] text-[#8ab4f8] font-bold whitespace-nowrap shadow-2xl mb-0.5 flex items-center gap-1";
+        pinRankText.className = "w-3.5 h-3.5 rounded-full bg-[#4285f4] text-[8px] flex items-center justify-center text-white font-bold";
+        pinRankText.innerText = "#1";
+
+        const t5 = t - 19000;
+        let val = 32;
+        let radarSize = 40;
+
+        if (t5 < 800) {
+          val = 32; radarSize = 40;
+        } else if (t5 >= 800 && t5 < 1700) {
+          val = 41; radarSize = 64;
+        } else if (t5 >= 1700 && t5 < 2700) {
+          val = 53; radarSize = 92;
+        } else if (t5 >= 2700 && t5 < 3700) {
+          val = 68; radarSize = 120;
+        } else {
+          val = 76; radarSize = 150;
+        }
+
+        googleVisCounter.innerText = `${val}%`;
+        googleVisBar.style.width = `${val}%`;
+        googleRadar.style.width = `${radarSize}px`;
+        googleRadar.style.height = `${radarSize}px`;
+      }
+
+      // CENA 6 (24s a 28s)
+      else if (t >= 24000 && t < 28000) {
+        setScene(6);
+        googleMapLayer.style.opacity = '0.2';
+        googleRadar.style.opacity = '0.2';
+
+        const t6 = t - 24000;
+
+        if (t6 >= 200) {
+          gMetric1.style.opacity = '1';
+          gMetric1.style.transform = 'translateY(0px)';
+        } else {
+          gMetric1.style.opacity = '0';
+          gMetric1.style.transform = 'translateY(8px)';
+        }
+
+        if (t6 >= 1200) {
+          gMetric2.style.opacity = '1';
+          gMetric2.style.transform = 'translateY(0px)';
+        } else {
+          gMetric2.style.opacity = '0';
+          gMetric2.style.transform = 'translateY(8px)';
+        }
+
+        if (t6 >= 2200) {
+          gMetric3.style.opacity = '1';
+          gMetric3.style.transform = 'translateY(0px)';
+        } else {
+          gMetric3.style.opacity = '0';
+          gMetric3.style.transform = 'translateY(8px)';
+        }
+      }
+
+      // CENA 7 (28s a 32s)
+      else {
+        const t7 = t - 28000;
+
+        let fadeFactor = 1;
+        if (t >= 31000) {
+          fadeFactor = Math.max(0, 1 - ((t - 31000) / 1000));
+        }
+
+        setScene(7, fadeFactor);
+        googleMapLayer.style.opacity = (0.9 * fadeFactor).toString();
+        googleRadar.style.opacity = (0.8 * fadeFactor).toString();
+
+        pinRankText.innerText = "#1";
+        pinRankText.className = "w-3.5 h-3.5 rounded-full bg-[#34a853] text-[8px] flex items-center justify-center text-white font-bold";
+
+        if (t7 >= 300 && t < 31000) {
+          gFinalTag1.style.opacity = '1';
+        } else if (t >= 31000) {
+          gFinalTag1.style.opacity = fadeFactor.toString();
+        } else {
+          gFinalTag1.style.opacity = '0';
+        }
+
+        if (t7 >= 1100 && t < 31000) {
+          gFinalTag2.style.opacity = '1';
+        } else if (t >= 31000) {
+          gFinalTag2.style.opacity = fadeFactor.toString();
+        } else {
+          gFinalTag2.style.opacity = '0';
+        }
+      }
+    }
+
+    function timelineLoop(now) {
+      const elapsed = (now - startTime);
+      renderFrame(elapsed);
+      requestAnimationFrame(timelineLoop);
+    }
+    requestAnimationFrame(timelineLoop);
+  </script>
+</body>
+</html>

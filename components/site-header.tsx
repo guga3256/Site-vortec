@@ -1,17 +1,11 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { MapPin, Menu, Star, TrendingUp, X } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { Logo } from '@/components/logo'
 import { WhatsappButton } from '@/components/whatsapp-button'
 import { NAV_LINKS } from '@/lib/site'
 import { cn } from '@/lib/utils'
-
-const TICKER_ITEMS = [
-  { icon: Star, text: 'Mais avaliações. Mais confiança.' },
-  { icon: MapPin, text: 'Top 3 no Google Maps da sua região' },
-  { icon: TrendingUp, text: 'Sites que transformam visitas em clientes' },
-]
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false)
@@ -26,32 +20,6 @@ export function SiteHeader() {
 
   return (
     <div className="fixed inset-x-0 top-0 z-50">
-      {/* Top ticker — marquee animado */}
-      <div className="overflow-hidden border-b border-white/5 bg-primary text-primary-foreground">
-        <div className="flex w-max animate-marquee">
-          {[0, 1].map((dup) => (
-            <ul
-              key={dup}
-              className="flex shrink-0 items-center"
-              aria-hidden={dup === 1}
-            >
-              {Array.from({ length: 3 }).flatMap((_, r) =>
-                TICKER_ITEMS.map((item, i) => (
-                  <li
-                    key={`${dup}-${r}-${i}`}
-                    className="flex items-center gap-2 whitespace-nowrap px-6 py-2 text-xs font-medium"
-                  >
-                    <item.icon className="h-3.5 w-3.5 opacity-80" />
-                    {item.text}
-                    <span className="ml-6 opacity-40">/</span>
-                  </li>
-                )),
-              )}
-            </ul>
-          ))}
-        </div>
-      </div>
-
       {/* Nav principal */}
       <header
         className={cn(
