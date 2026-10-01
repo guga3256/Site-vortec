@@ -224,12 +224,60 @@
   animation: vortec-ping 2.8s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
+/* Rede de pontos (hero): arcos se desenham, seguram e somem em sequência */
+@keyframes map-arc-draw {
+  0% {
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  35%,
+  70% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+.map-arc {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  animation: map-arc-draw 9s ease-in-out infinite;
+}
+@keyframes map-pulse {
+  0% {
+    transform: scale(0.3);
+    opacity: 0.6;
+  }
+  80%,
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+.map-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: map-pulse 3.2s ease-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee,
   .animate-float,
   .animate-rise,
-  .animate-radar {
+  .animate-radar,
+  .map-pulse {
     animation: none;
+  }
+  .map-arc {
+    animation: none;
+    stroke-dashoffset: 0;
+    opacity: 1;
   }
 }
 

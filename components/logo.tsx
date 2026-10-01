@@ -4,15 +4,22 @@ import { cn } from '@/lib/utils'
 export function Logo({
   className,
   withTagline = false,
+  large = false,
 }: {
   className?: string
   withTagline?: boolean
+  large?: boolean
 }) {
   return (
     <span className={cn('inline-flex items-center gap-2.5', className)}>
-      <VortecMark className="h-7 w-7" />
+      <VortecMark className={large ? 'h-8 w-8' : 'h-7 w-7'} />
       <span className="flex flex-col leading-none">
-        <span className="font-display text-xl font-semibold tracking-tight text-foreground">
+        <span
+          className={cn(
+            'font-display font-semibold tracking-tight text-foreground',
+            large ? 'text-2xl' : 'text-xl',
+          )}
+        >
           vortec
         </span>
         {withTagline && (

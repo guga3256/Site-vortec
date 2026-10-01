@@ -31,7 +31,7 @@ export function SiteHeader() {
       >
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 lg:px-8">
           <a href="#topo" aria-label="Vortec — início">
-            <Logo />
+            <Logo large />
           </a>
 
           <nav className="hidden items-center gap-8 md:flex">

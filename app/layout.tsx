@@ -45,6 +45,13 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`${inter.variable} bg-background`}>
       <head>
+        {/* Ao atualizar a página, sempre voltar para o topo (home): o navegador
+            não restaura a rolagem e o #âncora sai da URL antes de pular até ela. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `history.scrollRestoration='manual';if(location.hash)history.replaceState(null,'',location.pathname+location.search);window.scrollTo(0,0);addEventListener('load',function(){window.scrollTo(0,0)})`,
+          }}
+        />
         <link
           href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap"
           rel="stylesheet"

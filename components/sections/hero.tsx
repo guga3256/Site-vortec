@@ -1,20 +1,41 @@
 import { WhatsappButton } from '@/components/whatsapp-button'
-import { CountUp, MaskText, Reveal } from '@/components/scroll'
+import { MaskText, Reveal } from '@/components/scroll'
+import { NetworkBackground } from '@/components/network-background'
 
 export function Hero() {
   return (
     <section id="topo" className="relative flex flex-col overflow-hidden lg:block lg:h-svh lg:min-h-[640px]">
+      {/* Fundo: pontos se interligando pela seção toda, bem apagados */}
+      <NetworkBackground className="absolute inset-0 h-full w-full opacity-[0.18]" />
+
       {/* Fundo: glows */}
       <div className="animate-float pointer-events-none absolute -top-24 -left-24 h-96 w-96 rounded-full bg-primary/25 blur-[120px]" />
       <div className="pointer-events-none absolute top-1/2 right-[8%] h-[34rem] w-[34rem] -translate-y-1/2 rounded-full bg-primary/15 blur-[140px]" />
 
       {/* Visual — ocupa a metade direita de cima a baixo no desktop.
-          O iframe mantém o tamanho nativo do embed (480×780) e é escalado. */}
-      <div className="relative order-last mx-auto h-[640px] w-full max-w-[400px] lg:absolute lg:inset-y-0 lg:right-0 lg:h-auto lg:w-1/2 lg:max-w-none">
+          O iframe mantém o tamanho nativo do embed (480×780) e é escalado.
+          --s = escala do celular, --dy = deslocamento vertical do centro. */}
+      <div className="relative order-last mx-auto mt-6 h-[600px] w-full max-w-[360px] [--dy:0px] [--s:0.72] lg:absolute lg:inset-y-0 lg:right-0 lg:mt-0 lg:h-auto lg:w-1/2 lg:max-w-none lg:[--dy:2rem] [@media(min-height:860px)]:lg:[--s:0.85] [@media(min-height:1000px)]:lg:[--s:1]">
+        {/* Aviso: é uma simulação. Fica logo acima do topo do celular
+            (o aparelho tem 720px de altura no embed). */}
+        <span
+          className="absolute left-1/2 z-10 inline-flex -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-muted-foreground backdrop-blur"
+          style={{ top: 'calc(50% + var(--dy) - 360px * var(--s) - 2.75rem)' }}
+        >
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
+          <span>
+            <span className="font-medium text-foreground">Simulação ilustrativa</span>
+            {/* Em telas muito estreitas fica só o rótulo */}
+            <span className="max-[370px]:hidden">
+              {' · '}como seu cliente te encontra no Google
+            </span>
+          </span>
+        </span>
         <iframe
           src="/hero-embed.html"
-          title="Demonstração: sua empresa aparecendo no Google"
-          className="absolute top-1/2 left-1/2 h-[780px] w-[480px] -translate-x-1/2 -translate-y-1/2 scale-[0.8] overflow-hidden border-0 bg-transparent lg:top-[calc(50%+2rem)] lg:scale-[0.8] [@media(min-height:860px)]:lg:scale-[0.95] [@media(min-height:1000px)]:lg:scale-110"
+          title="Simulação: como seu cliente te encontra no Google"
+          className="absolute left-1/2 h-[780px] w-[480px] -translate-x-1/2 -translate-y-1/2 overflow-hidden border-0 bg-transparent"
+          style={{ top: 'calc(50% + var(--dy))', scale: 'var(--s)' }}
         />
       </div>
 
@@ -23,8 +44,8 @@ export function Hero() {
         <div className="max-w-md lg:max-w-[40rem]">
           <MaskText
             as="h1"
-            text="Quantos clientes compraram do seu concorrente hoje porque não te acharam no celular?"
-            highlight="porque não te acharam"
+            text="Quantos clientes você perde para o concorrente porque não te encontram no Google?"
+            highlight="porque não te encontram"
             delay={120}
             className="font-display text-3xl font-semibold leading-[1.1] tracking-tight text-balance text-foreground sm:text-4xl xl:text-[2.6rem]"
           />
@@ -34,11 +55,11 @@ export function Hero() {
             delay={420}
             className="mt-5 max-w-md text-sm leading-relaxed text-pretty text-muted-foreground lg:text-base"
           >
-            <CountUp to={90} suffix="%" className="font-medium text-foreground" />{' '}
-            das pessoas pesquisam no Google antes de ir a um
-            estabelecimento local. Se o seu Perfil da Empresa está
-            desatualizado, sem site ou sem telefone, você está simplesmente{' '}
-            <span className="text-foreground">invisível</span>.
+            <span className="mb-1 block font-medium text-foreground">
+              Seu negócio precisa aparecer quando o cliente está procurando.
+            </span>
+            Estruturamos sua presença no Google para você ser encontrado, gerar
+            contatos e vender mais.
           </Reveal>
 
           <Reveal
